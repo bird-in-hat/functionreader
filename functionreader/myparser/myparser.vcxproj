@@ -125,6 +125,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="C:\dev\FlexBison\custom_build_rules\win_flex_bison_custom_build.targets" />
+    <Import Project="..\custom_build_rules\win_flex_bison_custom_build.targets" />
   </ImportGroup>
 </Project>
