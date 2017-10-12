@@ -1,0 +1,2 @@
+win_bison.exe --output="parser.tab.cpp" --defines="parser.tab.h" --report="all"  "parser.y"
+win_flex.exe --outfile="parser.flex.cpp"  "parser.l"
