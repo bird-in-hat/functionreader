@@ -51,18 +51,18 @@ FunctionParser *fp;
 	string sval;
 }
 
-%token PROGRAMM VAR BEGIN END
+%token PROGRAMM VAR START END
 	
-%token FUNCTION DOUBLETYPE DOMAIN INTTYPE
+%token FUNCTIONTYPE DOUBLETYPE DOMAINTYPE INTTYPE
 
 %token ENDL
 
 %token DOML DOMR
 
-%token <ival> INTVAR
-%token <dval> DOUBLEVAR
+%token <ival> INTVAL
+%token <dval> DOUBLEVAL
 %token <sval> STRING
-%token <sval> FUNCTIONVAR
+%token <sval> FUNCTIONVAL
 
 %%
 prog:
@@ -78,7 +78,7 @@ var_lines:
 	var_line
 	| var_lines var_line
 var_line: // как пройтись по всем vars и args, чтобы добавить их в map?
-	vars ':' FUNCTION '(' args ')' ';' ENDLS 
+	vars ':' FUNCTIONTYPE '(' args ')' ';' ENDLS 
 	  		{
 				for ( int i = 0; i < variables.size(); i++)
 					fnames.insert(pair<string, fstrings>(variables[i], { arguments, "" }));			
@@ -91,7 +91,7 @@ var_line: // как пройтись по всем vars и args, чтобы до
 					doublevars.insert(pair<string, double>(variables[i], 0.0));
 				variables.clear();
 			}
-	| vars ':' DOMAIN ';' ENDLS
+	| vars ':' DOMAINTYPE ';' ENDLS
 			{
 				for ( int i = 0; i < variables.size(); i++)
 					domvars.insert(pair<string, dmn>(variables[i], { -1.0, 1.0 }));
@@ -113,42 +113,42 @@ vars:
 	| vars ',' STRING { variables.push_back( $3 ); }
 	;
 body_section:
-	BEGIN body_lines footer
+	START body_lines footer
 	;
 body_lines:
 	body_line
 	| body_lines body_line
 	;
 body_line:
-	STRING ":=" FUNCTIONVAR ';' ENDLS 
+	STRING ":=" FUNCTIONVAL ';' ENDLS 
 			{ 
 				fnit = fnames.find( $1 );
 				if (fnit == fnames.end() ) yyerror("No function with this name");
 				(fnit->second).function = $3;
 			}
-	| STRING ":=" DOUBLEVAR ';' ENDLS
+	| STRING ":=" DOUBLEVAL ';' ENDLS
 			{
 				dvit = doublevars.find( $1 );
 				if (dvit == doublevars.end() ) yyerror("No double variable with this name");
-				dvit->second = stod( $3 );
+				dvit->second = $3;
 			}
-	| STRING ":=" INTVAR ';' ENDLS
+	| STRING ":=" INTVAL ';' ENDLS
 			{
 				ivit = intvars.find( $1 );
 				if (ivit == intvars.end() ) yyerror("No int variable with this name");
-				ivit->second = stoi( $3 );
+				ivit->second = $3;
 			}
-	| STRING DOML ":=" DOUBLEVAR ';' ENDLS
+	| STRING DOML ":=" DOUBLEVAL ';' ENDLS
 			{
 				domvit = domvars.find( $1 );
 				if (domvit == domvars.end() ) yyerror("No domain variable with this name");
-				(domvit->second).left = stoi( $4 );
+				(domvit->second).left = $4;
 			}
-	| STRING DOMR ":=" DOUBLEVAR ';' ENDLS
+	| STRING DOMR ":=" DOUBLEVAL ';' ENDLS
 			{
 				domvit = domvars.find( $1 );
 				if (domvit == domvars.end() ) yyerror("No domain variable with this name");
-				(domvit->second).right = stoi( $4 );
+				(domvit->second).right = $4;
 			}
 	| STRING ":=" STRING '(' STRING ',' STRING ',' STRING ',' STRING ',' STRING ')'	';' ENDLS
 	// 1       2     3    4    5     6     7    8    9    10    11    12   13   14   15  16

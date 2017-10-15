@@ -48,19 +48,19 @@ extern int yydebug;
    enum yytokentype {
      PROGRAMM = 258,
      VAR = 259,
-     BEGIN = 260,
+     START = 260,
      END = 261,
-     FUNCTION = 262,
+     FUNCTIONTYPE = 262,
      DOUBLETYPE = 263,
-     DOMAIN = 264,
+     DOMAINTYPE = 264,
      INTTYPE = 265,
      ENDL = 266,
      DOML = 267,
      DOMR = 268,
-     INTVAR = 269,
-     DOUBLEVAR = 270,
+     INTVAL = 269,
+     DOUBLEVAL = 270,
      STRING = 271,
-     FUNCTIONVAR = 272
+     FUNCTIONVAL = 272
    };
 #endif
 

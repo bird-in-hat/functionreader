@@ -11,9 +11,9 @@ Grammar
     4 var_lines: var_line
     5          | var_lines var_line
 
-    6 var_line: vars ':' FUNCTION '(' args ')' ';' ENDLS
+    6 var_line: vars ':' FUNCTIONTYPE '(' args ')' ';' ENDLS
     7         | vars ':' DOUBLETYPE ';' ENDLS
-    8         | vars ':' DOMAIN ';' ENDLS
+    8         | vars ':' DOMAINTYPE ';' ENDLS
     9         | vars ':' INTTYPE ';' ENDLS
 
    10 args: STRING
@@ -22,16 +22,16 @@ Grammar
    12 vars: STRING
    13     | vars ',' STRING
 
-   14 body_section: BEGIN body_lines footer
+   14 body_section: START body_lines footer
 
    15 body_lines: body_line
    16           | body_lines body_line
 
-   17 body_line: STRING ":=" FUNCTIONVAR ';' ENDLS
-   18          | STRING ":=" DOUBLEVAR ';' ENDLS
-   19          | STRING ":=" INTVAR ';' ENDLS
-   20          | STRING DOML ":=" DOUBLEVAR ';' ENDLS
-   21          | STRING DOMR ":=" DOUBLEVAR ';' ENDLS
+   17 body_line: STRING ":=" FUNCTIONVAL ';' ENDLS
+   18          | STRING ":=" DOUBLEVAL ';' ENDLS
+   19          | STRING ":=" INTVAL ';' ENDLS
+   20          | STRING DOML ":=" DOUBLEVAL ';' ENDLS
+   21          | STRING DOMR ":=" DOUBLEVAL ';' ENDLS
    22          | STRING ":=" STRING '(' STRING ',' STRING ',' STRING ',' STRING ',' STRING ')' ';' ENDLS
 
    23 footer: END ENDLS
@@ -51,19 +51,19 @@ $end (0) 0
 error (256)
 PROGRAMM (258) 2
 VAR (259) 3
-BEGIN (260) 14
+START (260) 14
 END (261) 23
-FUNCTION (262) 6
+FUNCTIONTYPE (262) 6
 DOUBLETYPE (263) 7
-DOMAIN (264) 8
+DOMAINTYPE (264) 8
 INTTYPE (265) 9
 ENDL (266) 24 25
 DOML (267) 20
 DOMR (268) 21
-INTVAR (269) 19
-DOUBLEVAR (270) 18 20 21
+INTVAL (269) 19
+DOUBLEVAL (270) 18 20 21
 STRING (271) 2 10 11 12 13 17 18 19 20 21 22
-FUNCTIONVAR (272) 17
+FUNCTIONVAL (272) 17
 ":=" (273) 17 18 19 20 21 22
 
 
@@ -159,7 +159,7 @@ State 7
 
     1 prog: header var_section . body_section
 
-    BEGIN  shift, and go to state 13
+    START  shift, and go to state 13
 
     body_section  go to state 14
 
@@ -202,9 +202,9 @@ State 11
 
 State 12
 
-    6 var_line: vars . ':' FUNCTION '(' args ')' ';' ENDLS
+    6 var_line: vars . ':' FUNCTIONTYPE '(' args ')' ';' ENDLS
     7         | vars . ':' DOUBLETYPE ';' ENDLS
-    8         | vars . ':' DOMAIN ';' ENDLS
+    8         | vars . ':' DOMAINTYPE ';' ENDLS
     9         | vars . ':' INTTYPE ';' ENDLS
    13 vars: vars . ',' STRING
 
@@ -214,7 +214,7 @@ State 12
 
 State 13
 
-   14 body_section: BEGIN . body_lines footer
+   14 body_section: START . body_lines footer
 
     STRING  shift, and go to state 20
 
@@ -255,15 +255,15 @@ State 17
 
 State 18
 
-    6 var_line: vars ':' . FUNCTION '(' args ')' ';' ENDLS
+    6 var_line: vars ':' . FUNCTIONTYPE '(' args ')' ';' ENDLS
     7         | vars ':' . DOUBLETYPE ';' ENDLS
-    8         | vars ':' . DOMAIN ';' ENDLS
+    8         | vars ':' . DOMAINTYPE ';' ENDLS
     9         | vars ':' . INTTYPE ';' ENDLS
 
-    FUNCTION    shift, and go to state 24
-    DOUBLETYPE  shift, and go to state 25
-    DOMAIN      shift, and go to state 26
-    INTTYPE     shift, and go to state 27
+    FUNCTIONTYPE  shift, and go to state 24
+    DOUBLETYPE    shift, and go to state 25
+    DOMAINTYPE    shift, and go to state 26
+    INTTYPE       shift, and go to state 27
 
 
 State 19
@@ -275,11 +275,11 @@ State 19
 
 State 20
 
-   17 body_line: STRING . ":=" FUNCTIONVAR ';' ENDLS
-   18          | STRING . ":=" DOUBLEVAR ';' ENDLS
-   19          | STRING . ":=" INTVAR ';' ENDLS
-   20          | STRING . DOML ":=" DOUBLEVAR ';' ENDLS
-   21          | STRING . DOMR ":=" DOUBLEVAR ';' ENDLS
+   17 body_line: STRING . ":=" FUNCTIONVAL ';' ENDLS
+   18          | STRING . ":=" DOUBLEVAL ';' ENDLS
+   19          | STRING . ":=" INTVAL ';' ENDLS
+   20          | STRING . DOML ":=" DOUBLEVAL ';' ENDLS
+   21          | STRING . DOMR ":=" DOUBLEVAL ';' ENDLS
    22          | STRING . ":=" STRING '(' STRING ',' STRING ',' STRING ',' STRING ',' STRING ')' ';' ENDLS
 
     DOML  shift, and go to state 29
@@ -289,7 +289,7 @@ State 20
 
 State 21
 
-   14 body_section: BEGIN body_lines . footer
+   14 body_section: START body_lines . footer
    16 body_lines: body_lines . body_line
 
     END     shift, and go to state 32
@@ -315,7 +315,7 @@ State 23
 
 State 24
 
-    6 var_line: vars ':' FUNCTION . '(' args ')' ';' ENDLS
+    6 var_line: vars ':' FUNCTIONTYPE . '(' args ')' ';' ENDLS
 
     '('  shift, and go to state 35
 
@@ -329,7 +329,7 @@ State 25
 
 State 26
 
-    8 var_line: vars ':' DOMAIN . ';' ENDLS
+    8 var_line: vars ':' DOMAINTYPE . ';' ENDLS
 
     ';'  shift, and go to state 37
 
@@ -350,29 +350,29 @@ State 28
 
 State 29
 
-   20 body_line: STRING DOML . ":=" DOUBLEVAR ';' ENDLS
+   20 body_line: STRING DOML . ":=" DOUBLEVAL ';' ENDLS
 
     ":="  shift, and go to state 39
 
 
 State 30
 
-   21 body_line: STRING DOMR . ":=" DOUBLEVAR ';' ENDLS
+   21 body_line: STRING DOMR . ":=" DOUBLEVAL ';' ENDLS
 
     ":="  shift, and go to state 40
 
 
 State 31
 
-   17 body_line: STRING ":=" . FUNCTIONVAR ';' ENDLS
-   18          | STRING ":=" . DOUBLEVAR ';' ENDLS
-   19          | STRING ":=" . INTVAR ';' ENDLS
+   17 body_line: STRING ":=" . FUNCTIONVAL ';' ENDLS
+   18          | STRING ":=" . DOUBLEVAL ';' ENDLS
+   19          | STRING ":=" . INTVAL ';' ENDLS
    22          | STRING ":=" . STRING '(' STRING ',' STRING ',' STRING ',' STRING ',' STRING ')' ';' ENDLS
 
-    INTVAR       shift, and go to state 41
-    DOUBLEVAR    shift, and go to state 42
+    INTVAL       shift, and go to state 41
+    DOUBLEVAL    shift, and go to state 42
     STRING       shift, and go to state 43
-    FUNCTIONVAR  shift, and go to state 44
+    FUNCTIONVAL  shift, and go to state 44
 
 
 State 32
@@ -393,14 +393,14 @@ State 33
 
 State 34
 
-   14 body_section: BEGIN body_lines footer .
+   14 body_section: START body_lines footer .
 
     $default  reduce using rule 14 (body_section)
 
 
 State 35
 
-    6 var_line: vars ':' FUNCTION '(' . args ')' ';' ENDLS
+    6 var_line: vars ':' FUNCTIONTYPE '(' . args ')' ';' ENDLS
 
     STRING  shift, and go to state 46
 
@@ -418,7 +418,7 @@ State 36
 
 State 37
 
-    8 var_line: vars ':' DOMAIN ';' . ENDLS
+    8 var_line: vars ':' DOMAINTYPE ';' . ENDLS
 
     ENDL  shift, and go to state 15
 
@@ -436,28 +436,28 @@ State 38
 
 State 39
 
-   20 body_line: STRING DOML ":=" . DOUBLEVAR ';' ENDLS
+   20 body_line: STRING DOML ":=" . DOUBLEVAL ';' ENDLS
 
-    DOUBLEVAR  shift, and go to state 51
+    DOUBLEVAL  shift, and go to state 51
 
 
 State 40
 
-   21 body_line: STRING DOMR ":=" . DOUBLEVAR ';' ENDLS
+   21 body_line: STRING DOMR ":=" . DOUBLEVAL ';' ENDLS
 
-    DOUBLEVAR  shift, and go to state 52
+    DOUBLEVAL  shift, and go to state 52
 
 
 State 41
 
-   19 body_line: STRING ":=" INTVAR . ';' ENDLS
+   19 body_line: STRING ":=" INTVAL . ';' ENDLS
 
     ';'  shift, and go to state 53
 
 
 State 42
 
-   18 body_line: STRING ":=" DOUBLEVAR . ';' ENDLS
+   18 body_line: STRING ":=" DOUBLEVAL . ';' ENDLS
 
     ';'  shift, and go to state 54
 
@@ -471,7 +471,7 @@ State 43
 
 State 44
 
-   17 body_line: STRING ":=" FUNCTIONVAR . ';' ENDLS
+   17 body_line: STRING ":=" FUNCTIONVAL . ';' ENDLS
 
     ';'  shift, and go to state 56
 
@@ -495,7 +495,7 @@ State 46
 
 State 47
 
-    6 var_line: vars ':' FUNCTION '(' args . ')' ';' ENDLS
+    6 var_line: vars ':' FUNCTIONTYPE '(' args . ')' ';' ENDLS
    11 args: args . ',' STRING
 
     ')'  shift, and go to state 57
@@ -514,7 +514,7 @@ State 48
 
 State 49
 
-    8 var_line: vars ':' DOMAIN ';' ENDLS .
+    8 var_line: vars ':' DOMAINTYPE ';' ENDLS .
    25 ENDLS: ENDLS . ENDL
 
     ENDL  shift, and go to state 23
@@ -534,21 +534,21 @@ State 50
 
 State 51
 
-   20 body_line: STRING DOML ":=" DOUBLEVAR . ';' ENDLS
+   20 body_line: STRING DOML ":=" DOUBLEVAL . ';' ENDLS
 
     ';'  shift, and go to state 59
 
 
 State 52
 
-   21 body_line: STRING DOMR ":=" DOUBLEVAR . ';' ENDLS
+   21 body_line: STRING DOMR ":=" DOUBLEVAL . ';' ENDLS
 
     ';'  shift, and go to state 60
 
 
 State 53
 
-   19 body_line: STRING ":=" INTVAR ';' . ENDLS
+   19 body_line: STRING ":=" INTVAL ';' . ENDLS
 
     ENDL  shift, and go to state 15
 
@@ -557,7 +557,7 @@ State 53
 
 State 54
 
-   18 body_line: STRING ":=" DOUBLEVAR ';' . ENDLS
+   18 body_line: STRING ":=" DOUBLEVAL ';' . ENDLS
 
     ENDL  shift, and go to state 15
 
@@ -573,7 +573,7 @@ State 55
 
 State 56
 
-   17 body_line: STRING ":=" FUNCTIONVAR ';' . ENDLS
+   17 body_line: STRING ":=" FUNCTIONVAL ';' . ENDLS
 
     ENDL  shift, and go to state 15
 
@@ -582,7 +582,7 @@ State 56
 
 State 57
 
-    6 var_line: vars ':' FUNCTION '(' args ')' . ';' ENDLS
+    6 var_line: vars ':' FUNCTIONTYPE '(' args ')' . ';' ENDLS
 
     ';'  shift, and go to state 65
 
@@ -596,7 +596,7 @@ State 58
 
 State 59
 
-   20 body_line: STRING DOML ":=" DOUBLEVAR ';' . ENDLS
+   20 body_line: STRING DOML ":=" DOUBLEVAL ';' . ENDLS
 
     ENDL  shift, and go to state 15
 
@@ -605,7 +605,7 @@ State 59
 
 State 60
 
-   21 body_line: STRING DOMR ":=" DOUBLEVAR ';' . ENDLS
+   21 body_line: STRING DOMR ":=" DOUBLEVAL ';' . ENDLS
 
     ENDL  shift, and go to state 15
 
@@ -614,7 +614,7 @@ State 60
 
 State 61
 
-   19 body_line: STRING ":=" INTVAR ';' ENDLS .
+   19 body_line: STRING ":=" INTVAL ';' ENDLS .
    25 ENDLS: ENDLS . ENDL
 
     ENDL  shift, and go to state 23
@@ -624,7 +624,7 @@ State 61
 
 State 62
 
-   18 body_line: STRING ":=" DOUBLEVAR ';' ENDLS .
+   18 body_line: STRING ":=" DOUBLEVAL ';' ENDLS .
    25 ENDLS: ENDLS . ENDL
 
     ENDL  shift, and go to state 23
@@ -641,7 +641,7 @@ State 63
 
 State 64
 
-   17 body_line: STRING ":=" FUNCTIONVAR ';' ENDLS .
+   17 body_line: STRING ":=" FUNCTIONVAL ';' ENDLS .
    25 ENDLS: ENDLS . ENDL
 
     ENDL  shift, and go to state 23
@@ -651,7 +651,7 @@ State 64
 
 State 65
 
-    6 var_line: vars ':' FUNCTION '(' args ')' ';' . ENDLS
+    6 var_line: vars ':' FUNCTIONTYPE '(' args ')' ';' . ENDLS
 
     ENDL  shift, and go to state 15
 
@@ -667,7 +667,7 @@ State 66
 
 State 67
 
-   20 body_line: STRING DOML ":=" DOUBLEVAR ';' ENDLS .
+   20 body_line: STRING DOML ":=" DOUBLEVAL ';' ENDLS .
    25 ENDLS: ENDLS . ENDL
 
     ENDL  shift, and go to state 23
@@ -677,7 +677,7 @@ State 67
 
 State 68
 
-   21 body_line: STRING DOMR ":=" DOUBLEVAR ';' ENDLS .
+   21 body_line: STRING DOMR ":=" DOUBLEVAL ';' ENDLS .
    25 ENDLS: ENDLS . ENDL
 
     ENDL  shift, and go to state 23
@@ -694,7 +694,7 @@ State 69
 
 State 70
 
-    6 var_line: vars ':' FUNCTION '(' args ')' ';' ENDLS .
+    6 var_line: vars ':' FUNCTIONTYPE '(' args ')' ';' ENDLS .
    25 ENDLS: ENDLS . ENDL
 
     ENDL  shift, and go to state 23

@@ -11,13 +11,13 @@ int line_num = 1;
 [ \t]	;
 programm        { return PROGRAMM; }
 var			    { return VAR; }
-begin		    { return BEGIN; }
+begin		    { return START; }
 end             { return END; }
 
-Function	    { return FUNCTION; }
+Function	    { return FUNCTIONTYPE; }
 Double 		    { return DOUBLETYPE; }
 Int		   	    { return INTTYPE; }
-Domain		    { return DOMAIN; }
+Domains		    { return DOMAINTYPE; }
 
 \.left 		    { return DOML; }
 \.right 	    { return DOMR; }
@@ -36,7 +36,7 @@ Domain		    { return DOMAIN; }
 				}
 [-]?[0-9]+      { 
 					yylval->ival = atoi(yytext); 
-					return INT; 
+					return INTVAL; 
 				}		
 \n              { 
 					++line_num; 

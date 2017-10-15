@@ -149,19 +149,19 @@ extern int yydebug;
    enum yytokentype {
      PROGRAMM = 258,
      VAR = 259,
-     BEGIN = 260,
+     START = 260,
      END = 261,
-     FUNCTION = 262,
+     FUNCTIONTYPE = 262,
      DOUBLETYPE = 263,
-     DOMAIN = 264,
+     DOMAINTYPE = 264,
      INTTYPE = 265,
      ENDL = 266,
      DOML = 267,
      DOMR = 268,
-     INTVAR = 269,
-     DOUBLEVAR = 270,
+     INTVAL = 269,
+     DOUBLEVAL = 270,
      STRING = 271,
-     FUNCTIONVAR = 272
+     FUNCTIONVAL = 272
    };
 #endif
 
@@ -519,12 +519,12 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "PROGRAMM", "VAR", "BEGIN", "END",
-  "FUNCTION", "DOUBLETYPE", "DOMAIN", "INTTYPE", "ENDL", "DOML", "DOMR",
-  "INTVAR", "DOUBLEVAR", "STRING", "FUNCTIONVAR", "';'", "':'", "'('",
-  "')'", "','", "\":=\"", "$accept", "prog", "header", "var_section",
-  "var_lines", "var_line", "args", "vars", "body_section", "body_lines",
-  "body_line", "footer", "ENDLS", YY_NULL
+  "$end", "error", "$undefined", "PROGRAMM", "VAR", "START", "END",
+  "FUNCTIONTYPE", "DOUBLETYPE", "DOMAINTYPE", "INTTYPE", "ENDL", "DOML",
+  "DOMR", "INTVAL", "DOUBLEVAL", "STRING", "FUNCTIONVAL", "';'", "':'",
+  "'('", "')'", "','", "\":=\"", "$accept", "prog", "header",
+  "var_section", "var_lines", "var_line", "args", "vars", "body_section",
+  "body_lines", "body_line", "footer", "ENDLS", YY_NULL
 };
 #endif
 
@@ -1540,7 +1540,7 @@ yyreduce:
     {
 				dvit = doublevars.find( (yyvsp[(1) - (5)].sval) );
 				if (dvit == doublevars.end() ) yyerror("No double variable with this name");
-				dvit->second = stod( (yyvsp[(3) - (5)].dval) );
+				dvit->second = (yyvsp[(3) - (5)].dval);
 			}
     break;
 
@@ -1550,7 +1550,7 @@ yyreduce:
     {
 				ivit = intvars.find( (yyvsp[(1) - (5)].sval) );
 				if (ivit == intvars.end() ) yyerror("No int variable with this name");
-				ivit->second = stoi( (yyvsp[(3) - (5)].ival) );
+				ivit->second = (yyvsp[(3) - (5)].ival);
 			}
     break;
 
@@ -1560,7 +1560,7 @@ yyreduce:
     {
 				domvit = domvars.find( (yyvsp[(1) - (6)].sval) );
 				if (domvit == domvars.end() ) yyerror("No domain variable with this name");
-				(domvit->second).left = stoi( (yyvsp[(4) - (6)].dval) );
+				(domvit->second).left = (yyvsp[(4) - (6)].dval);
 			}
     break;
 
@@ -1570,7 +1570,7 @@ yyreduce:
     {
 				domvit = domvars.find( (yyvsp[(1) - (6)].sval) );
 				if (domvit == domvars.end() ) yyerror("No domain variable with this name");
-				(domvit->second).right = stoi( (yyvsp[(4) - (6)].dval) );
+				(domvit->second).right = (yyvsp[(4) - (6)].dval);
 			}
     break;
 
