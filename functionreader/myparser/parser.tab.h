@@ -34,7 +34,7 @@
 # define YY_YY_PARSER_TAB_H_INCLUDED
 /* Enabling traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -73,7 +73,7 @@ typedef union YYSTYPE
 
 	int ival;
 	double dval;
-	string sval;
+	std::string sval;
 
 
 /* Line 2058 of yacc.c  */

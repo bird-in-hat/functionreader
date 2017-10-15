@@ -48,7 +48,7 @@ FunctionParser *fp;
 %union {
 	int ival;
 	double dval;
-	string sval;
+	std::string sval;
 }
 
 %token PROGRAMM VAR START END
