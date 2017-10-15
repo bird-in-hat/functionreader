@@ -3,7 +3,7 @@
 #include <cmath>
 #include <time.h>
 
-#include "../fparser452/fparser.hh"
+#include "fparser.hh"
 
 double R_k(double r, double z_min, double a, double b, double c, double d){
 	return -4 * (z_min - r - c) * (z_min - r - d) / (b - a);

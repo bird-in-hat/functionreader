@@ -20,4 +20,17 @@
   <ItemGroup>
     <Bison Include="parser.y" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="parser.flex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="parser.tab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="parser.tab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
