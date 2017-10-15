@@ -510,7 +510,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    69,    69,    72,    75,    78,    79,    81,    88,    94,
      100,   108,   109,   112,   113,   116,   119,   120,   123,   129,
-     135,   141,   147,   153,   195,   198,   199
+     135,   141,   147,   153,   196,   199,   200
 };
 #endif
 
@@ -1530,7 +1530,7 @@ yyreduce:
     { 
 				fnit = fnames.find( (yyvsp[(1) - (5)].sval) );
 				if (fnit == fnames.end() ) yyerror("No function with this name");
-				(it->second).function = (yyvsp[(3) - (5)].sval);
+				(fnit->second).function = (yyvsp[(3) - (5)].sval);
 			}
     break;
 
@@ -1581,7 +1581,7 @@ yyreduce:
 				FunctionParser fp;
 				fnit = fnames.find( (yyvsp[(5) - (16)].sval) );
 				if (fnit == fnames.end() ) yyerror("No function with this name");	
-				int err = fp.Parse( (fnit->second).function, (fnit->second).funcargs) );
+				int err = fp.Parse( (fnit->second).function, (fnit->second).funcargs );
 				if ( err >= 0 ) yyerror(fp.ErrorMsg());
 
 				domvit = domvars.find( (yyvsp[(7) - (16)].sval) );
@@ -1598,19 +1598,20 @@ yyreduce:
 
 				dvit = doublevars.find( (yyvsp[(1) - (16)].sval) );
 				if (dvit == doublevars.end() ) yyerror("No double variable with this name");
-				double result;
+				
 
 				ivit = intvars.find( (yyvsp[(3) - (16)].sval) );
 				if (ivit == intvars.end() ) yyerror("No int variable with this name");
+				double result = 0;
 				int niter = 0;
 
-				switch( (yyvsp[(3) - (16)].sval) ){
-					case "agp":
-						result = agp(fp, dom, r, e, niter);
-						break;
-					case "kushner":
-						result = kushner(fp, dom, r, e, niter);
-						break;
+				if ((yyvsp[(3) - (16)].sval).compare("agp")) {
+					//result = agp(fp, dom, r, e, niter);
+					break;
+				}
+				if ((yyvsp[(3) - (16)].sval).compare("kushner")) {
+					//result = kushner(fp, dom, r, e, niter);
+					break;
 				}
 				dvit->second = result;
 				ivit->second = niter;
@@ -1619,7 +1620,7 @@ yyreduce:
 
 
 /* Line 1792 of yacc.c  */
-#line 1623 "parser.tab.cpp"
+#line 1624 "parser.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1851,7 +1852,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 201 "parser.y"
+#line 202 "parser.y"
 
 
 int main(int, char**) {

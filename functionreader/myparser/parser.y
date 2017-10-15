@@ -124,7 +124,7 @@ body_line:
 			{ 
 				fnit = fnames.find( $1 );
 				if (fnit == fnames.end() ) yyerror("No function with this name");
-				(it->second).function = $3;
+				(fnit->second).function = $3;
 			}
 	| STRING ":=" DOUBLEVAR ';' ENDLS
 			{
@@ -156,7 +156,7 @@ body_line:
 				FunctionParser fp;
 				fnit = fnames.find( $5 );
 				if (fnit == fnames.end() ) yyerror("No function with this name");	
-				int err = fp.Parse( (fnit->second).function, (fnit->second).funcargs) );
+				int err = fp.Parse( (fnit->second).function, (fnit->second).funcargs );
 				if ( err >= 0 ) yyerror(fp.ErrorMsg());
 
 				domvit = domvars.find( $7 );
@@ -173,19 +173,20 @@ body_line:
 
 				dvit = doublevars.find( $1 );
 				if (dvit == doublevars.end() ) yyerror("No double variable with this name");
-				double result;
+				
 
 				ivit = intvars.find( $3 );
 				if (ivit == intvars.end() ) yyerror("No int variable with this name");
+				double result = 0;
 				int niter = 0;
 
-				switch( $3 ){
-					case "agp":
-						result = agp(fp, dom, r, e, niter);
-						break;
-					case "kushner":
-						result = kushner(fp, dom, r, e, niter);
-						break;
+				if ($3.compare("agp")) {
+					//result = agp(fp, dom, r, e, niter);
+					break;
+				}
+				if ($3.compare("kushner")) {
+					//result = kushner(fp, dom, r, e, niter);
+					break;
 				}
 				dvit->second = result;
 				ivit->second = niter;

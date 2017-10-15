@@ -80,7 +80,7 @@
     <Flex>
       <BisonBridge>true</BisonBridge>
       <Wincompat>true</Wincompat>
-      <AdditionalOptions>--debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>--debug -F %(AdditionalOptions)</AdditionalOptions>
     </Flex>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,9 +134,9 @@
   <ItemGroup>
     <Bison Include="parser.y">
       <Debug Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</Debug>
-      <Warnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">all</Warnings>
+      <Warnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">none</Warnings>
       <Debug Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</Debug>
-      <Warnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">all</Warnings>
+      <Warnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">none</Warnings>
     </Bison>
   </ItemGroup>
   <ItemGroup>

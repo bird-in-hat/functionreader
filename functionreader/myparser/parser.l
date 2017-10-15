@@ -8,7 +8,7 @@ using namespace std;
 int line_num = 1;
 %}
 %%
-[ \t] ;
+[ \t]	;
 programm        { return PROGRAMM; }
 var			    { return VAR; }
 begin		    { return BEGIN; }
@@ -23,19 +23,19 @@ Domain		    { return DOMAIN; }
 \.right 	    { return DOMR; }
 
 (([a-zA-Z]+)|([-]?[0-9]+\.[0-9]+)|([-]?([0-9]+))|([()\+\-\/\*\^]+))+ {
-					yylval.sval = strdup(yytext);
+					yylval->sval = _strdup(yytext);
 					return FUNCTIONVAL;
 				}
 [a-zA-Z0-9]+    {
-					yylval.sval = strdup(yytext);
+					yylval->sval = _strdup(yytext);
 					return STRING;
 				}	
 [-]?[0-9]+\.[0-9]+ { 
-					yylval.fval = atof(yytext);
+					yylval->dval = atof(yytext);
 					return DOUBLEVAL; 
 				}
 [-]?[0-9]+      { 
-					yylval.ival = atoi(yytext); 
+					yylval->ival = atoi(yytext); 
 					return INT; 
 				}		
 \n              { 
