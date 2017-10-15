@@ -215,7 +215,7 @@ int main(int, char**) {
 	do {
 		yyparse();
 	} while (!feof(yyin));
-	
+	return 0;	
 }
 
 void yyerror(const char *s) {
